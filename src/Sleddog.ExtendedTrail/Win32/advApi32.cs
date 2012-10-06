@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
-namespace Sleddog.ExtendedTrail
+namespace Sleddog.ExtendedTrail.Win32
 {
-	public class advApi32
+	internal class advApi32
 	{
 		[DllImport("advapi32.dll", EntryPoint = "OpenSCManagerW", ExactSpelling = true, CharSet = CharSet.Unicode, SetLastError = true)]
 		public static extern IntPtr OpenSCManager(string machineName, string databaseName, uint dwAccess);
