@@ -50,7 +50,7 @@
     <Compile Include="Win32\ScmAccess.cs" />
     <Compile Include="Win32\ServiceAccess.cs" />
     <Compile Include="Win32\ServiceConfig.cs" />
-    <Compile Include="WindowsService.cs">
+    <Compile Include="WindowsServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
