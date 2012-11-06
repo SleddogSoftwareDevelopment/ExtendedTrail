@@ -1,22 +1,27 @@
 ﻿using System;
-using System.ServiceProcess;
 using System.Linq;
+using System.ServiceProcess;
 
 namespace Sleddog.ExtendedTrail
 {
 	public class WindowsServiceInstaller : ServiceInstaller
 	{
-		public WindowsServiceInstaller()
-		{
-			RecoveryOptions = new RecoveryOption[3];
-		}
+		private readonly RecoveryOption[] recoveryOptions = new RecoveryOption[3];
 
 		public TimeSpan FailCountResetTime { get; set; }
-		public RecoveryOption[] RecoveryOptions { get; private set; }
+
+		public RecoveryOption FirstFailure { get; set; }
+		public RecoveryOption SecondFailure { get; set; }
+		public RecoveryOption SubsequentFailure { get; set; }
 
 		private bool RequiresShutdownPrivileges()
 		{
-			return RecoveryOptions.Any(ro => ro.Action == RecoverAction.Reboot);
+			return recoveryOptions.Any(ro => ro.Action == RecoverAction.Reboot);
+		}
+
+		private bool AnyRecoveryOptions()
+		{
+			return recoveryOptions.Any(ro => ro.Action != RecoverAction.None);
 		}
 	}
 }
