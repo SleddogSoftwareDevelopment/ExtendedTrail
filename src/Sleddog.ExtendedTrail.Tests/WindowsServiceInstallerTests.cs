@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Sleddog.ExtendedTrail.Tests
 {
@@ -19,6 +20,14 @@ namespace Sleddog.ExtendedTrail.Tests
 		}
 
 		[Fact]
+		public void FirstFailureDoesNotAcceptNull()
+		{
+			var sut = new WindowsServiceInstaller();
+
+			Assert.Throws<ArgumentNullException>(() => sut.FirstFailure = null);
+		}
+
+		[Fact]
 		public void SecondFailureOptionAreNotNullOnInitialize()
 		{
 			var sut = new WindowsServiceInstaller();
@@ -27,11 +36,27 @@ namespace Sleddog.ExtendedTrail.Tests
 		}
 
 		[Fact]
+		public void SecondFailureDoesNotAcceptNull()
+		{
+			var sut = new WindowsServiceInstaller();
+
+			Assert.Throws<ArgumentNullException>(() => sut.SecondFailure = null);
+		}
+
+		[Fact]
 		public void SubsequentFailureOptionAreNotNullOnInitialize()
 		{
 			var sut = new WindowsServiceInstaller();
 
 			Assert.NotNull(sut.SubsequentFailure);
+		}
+
+		[Fact]
+		public void SubsequentFailureDoesNotAcceptNull()
+		{
+			var sut = new WindowsServiceInstaller();
+
+			Assert.Throws<ArgumentNullException>(() => sut.SubsequentFailure = null);
 		}
 	}
 }
