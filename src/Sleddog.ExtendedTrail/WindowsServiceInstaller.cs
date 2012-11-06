@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.ServiceProcess;
 
@@ -21,14 +20,42 @@ namespace Sleddog.ExtendedTrail
 			get { return recoveryOptions[0]; }
 			set
 			{
-				Contract.Requires(value != null);
+				if (value == null)
+				{
+					throw new ArgumentNullException("FirstFailure");
+				}
 
 				recoveryOptions[0] = value;
 			}
 		}
 
-		public RecoveryOption SecondFailure { get; set; }
-		public RecoveryOption SubsequentFailure { get; set; }
+		public RecoveryOption SecondFailure
+		{
+			get { return recoveryOptions[1]; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("SecondFailure");
+				}
+
+				recoveryOptions[1] = value;
+			}
+		}
+
+		public RecoveryOption SubsequentFailure
+		{
+			get { return recoveryOptions[2]; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("SubsequentFailure");
+				}
+
+				recoveryOptions[2] = value;
+			}
+		}
 
 		private bool RequiresShutdownPrivileges()
 		{
