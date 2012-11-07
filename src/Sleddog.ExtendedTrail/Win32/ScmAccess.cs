@@ -3,7 +3,7 @@ using System;
 namespace Sleddog.ExtendedTrail.Win32
 {
 	[Flags]
-	internal enum ScmAccess : uint
+	public enum ScmAccess : uint
 	{
 		/// <summary>
 		/// Required to connect to the service control manager.

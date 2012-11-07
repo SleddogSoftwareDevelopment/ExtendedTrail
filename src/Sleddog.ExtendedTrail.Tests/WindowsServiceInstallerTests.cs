@@ -6,12 +6,6 @@ namespace Sleddog.ExtendedTrail.Tests
 	public class WindowsServiceInstallerTests
 	{
 		[Fact]
-		public void CanInstantiate()
-		{
-			Assert.DoesNotThrow(() => new WindowsServiceInstaller());
-		}
-
-		[Fact]
 		public void FirstFailureOptionAreNotNullOnInitialize()
 		{
 			var sut = new WindowsServiceInstaller();

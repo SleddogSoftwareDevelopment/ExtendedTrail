@@ -5,8 +5,24 @@ namespace Sleddog.ExtendedTrail.Internals
 {
 	public class ServiceDatabaseConnection : IDisposable
 	{
+		private readonly IAdvApi32 advApi32;
 		private IntPtr serviceDatabaseLockHandle = IntPtr.Zero;
 		private IntPtr serviceManagerHandle = IntPtr.Zero;
+
+		public ServiceDatabaseConnection(IAdvApi32 advApi32)
+		{
+			this.advApi32 = advApi32;
+		}
+
+		public bool IsOpen
+		{
+			get { return serviceManagerHandle != IntPtr.Zero; }
+		}
+
+		public bool HasWriteLock
+		{
+			get { return serviceDatabaseLockHandle != IntPtr.Zero; }
+		}
 
 		public void Dispose()
 		{
@@ -15,7 +31,7 @@ namespace Sleddog.ExtendedTrail.Internals
 
 		public void Open()
 		{
-			serviceManagerHandle = advApi32.OpenSCManager(null, null, (uint) ScmAccess.ScManagerAllAccess);
+			serviceManagerHandle = advApi32.OpenServiceControlManager(null, null, ScmAccess.ScManagerAllAccess);
 
 			if (serviceManagerHandle.ToInt32() <= 0)
 			{
@@ -25,11 +41,11 @@ namespace Sleddog.ExtendedTrail.Internals
 
 		public void WriteLock()
 		{
-			serviceDatabaseLockHandle = advApi32.LockServiceDatabase(serviceManagerHandle);
+			serviceDatabaseLockHandle = advApi32.AquireServiceDatabaseLock(serviceManagerHandle);
 
 			if (serviceDatabaseLockHandle.ToInt32() <= 0)
 			{
-				throw new ServiceDatabaseConnectionException("Unabled to get write lock to the service database");
+				throw new ServiceDatabaseConnectionException("Unable to get write lock to the service database");
 			}
 		}
 
@@ -37,9 +53,10 @@ namespace Sleddog.ExtendedTrail.Internals
 		{
 			if (serviceDatabaseLockHandle != IntPtr.Zero)
 			{
-				advApi32.UnlockServiceDatabase(serviceDatabaseLockHandle);
-
-				serviceDatabaseLockHandle = IntPtr.Zero;
+				if (advApi32.ReleaseServiceDatabaseLock(serviceDatabaseLockHandle))
+				{
+					serviceDatabaseLockHandle = IntPtr.Zero;
+				}
 			}
 		}
 
@@ -47,11 +64,10 @@ namespace Sleddog.ExtendedTrail.Internals
 		{
 			if (serviceManagerHandle != IntPtr.Zero)
 			{
-				ReleaseLock();
-
-				advApi32.CloseServiceHandle(serviceManagerHandle);
-
-				serviceManagerHandle = IntPtr.Zero;
+				if (advApi32.CloseServiceControlManager(serviceManagerHandle))
+				{
+					serviceManagerHandle = IntPtr.Zero;
+				}
 			}
 		}
 	}

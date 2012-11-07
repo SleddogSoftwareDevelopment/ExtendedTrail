@@ -75,13 +75,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\ServiceConnection.cs" />
     <Compile Include="Internals\ServiceDatabaseConnection.cs" />
     <Compile Include="Internals\ServiceDatabaseConnectionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecoverAction.cs" />
     <Compile Include="RecoveryOption.cs" />
     <Compile Include="Win32\AccessMask.cs" />
-    <Compile Include="Win32\advApi32.cs" />
+    <Compile Include="Win32\AdvApi32.cs" />
+    <Compile Include="Win32\IAdvApi32.cs" />
     <Compile Include="Win32\ScmAccess.cs" />
     <Compile Include="Win32\ServiceAccess.cs" />
     <Compile Include="Win32\ServiceConfig.cs" />
