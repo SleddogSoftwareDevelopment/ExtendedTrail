@@ -76,8 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internals\ServiceConnection.cs" />
+    <Compile Include="Internals\ConnectionHandle.cs" />
     <Compile Include="Internals\ServiceDatabaseConnection.cs" />
-    <Compile Include="Internals\ServiceDatabaseConnectionException.cs" />
+    <Compile Include="Internals\ServiceConnectionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecoverAction.cs" />
     <Compile Include="RecoveryOption.cs" />

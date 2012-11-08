@@ -6,6 +6,7 @@ namespace Sleddog.ExtendedTrail.Win32
 	{
 		IntPtr OpenServiceControlManager(string machineName, string databaseName, ScmAccess serviceControlManagerAccess);
 		bool CloseServiceControlManager(IntPtr serviceControlManagerHandle);
+		bool CloseService(IntPtr serviceHandle);
 		IntPtr OpenService(IntPtr serviceControlManagerHandle, string serviceName, ScmAccess serviceControlManagerAccess);
 		IntPtr AquireServiceDatabaseLock(IntPtr serviceControlManagerHandle);
 		bool ReleaseServiceDatabaseLock(IntPtr serviceControlManagerHandler);

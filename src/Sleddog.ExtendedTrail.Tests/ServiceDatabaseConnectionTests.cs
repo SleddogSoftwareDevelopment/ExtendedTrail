@@ -17,25 +17,21 @@ namespace Sleddog.ExtendedTrail.Tests
 
 			var sut = new ServiceDatabaseConnection(advApi32.FakedObject);
 
-			sut.Open();
+			var connectionHandle = sut.Open();
+
+			Assert.True(connectionHandle.ServiceManagerIsOpen);
 
 			advApi32.CallsTo(_ => _.OpenServiceControlManager(A<string>._, A<string>._, A<ScmAccess>._)).MustHaveHappened();
 		}
 
 		[Theory, AutoFake]
-		public void CanCloseServiceManager(Fake<IAdvApi32> advApi32, int pointerValue)
+		public void CanCloseServiceManager(Fake<IAdvApi32> advApi32, int serviceManagerHandleValue)
 		{
-			advApi32.CallsTo(_ => _.OpenServiceControlManager(A<string>._, A<string>._, A<ScmAccess>._))
-				.Returns(new IntPtr(pointerValue));
-
-			advApi32.CallsTo(_ => _.CloseServiceControlManager(A<IntPtr>._))
-				.Returns(true);
-
 			var sut = new ServiceDatabaseConnection(advApi32.FakedObject);
 
-			sut.Open();
+			var connectionHandle = new ConnectionHandle {ServiceManagerHandle = new IntPtr(serviceManagerHandleValue)};
 
-			sut.Close();
+			sut.Close(connectionHandle);
 
 			advApi32.CallsTo(_ => _.CloseServiceControlManager(A<IntPtr>._)).MustHaveHappened();
 		}
@@ -45,23 +41,20 @@ namespace Sleddog.ExtendedTrail.Tests
 		{
 			var sut = new ServiceDatabaseConnection(advApi32.FakedObject);
 
-			Assert.Throws<ServiceDatabaseConnectionException>(() => sut.WriteLock());
+			Assert.Throws<ArgumentNullException>(() => sut.WriteLock(null));
 		}
 
 		[Theory, AutoFake]
 		public void CanAquireWriteLock(Fake<IAdvApi32> advApi32, int serviceControlManagerHandlerValue, int serviceDatabaseLockHandleValue)
 		{
-			advApi32.CallsTo(_ => _.OpenServiceControlManager(A<string>._, A<string>._, A<ScmAccess>._))
-				.Returns(new IntPtr(serviceControlManagerHandlerValue));
-
 			advApi32.CallsTo(_ => _.AquireServiceDatabaseLock(A<IntPtr>._))
 				.Returns(new IntPtr(serviceDatabaseLockHandleValue));
 
 			var sut = new ServiceDatabaseConnection(advApi32.FakedObject);
 
-			sut.Open();
+			var connectionHandle = new ConnectionHandle {ServiceManagerHandle = new IntPtr(serviceControlManagerHandlerValue)};
 
-			sut.WriteLock();
+			sut.WriteLock(connectionHandle);
 
 			advApi32.CallsTo(_ => _.AquireServiceDatabaseLock(A<IntPtr>._)).MustHaveHappened();
 		}
@@ -69,19 +62,15 @@ namespace Sleddog.ExtendedTrail.Tests
 		[Theory, AutoFake]
 		public void CanReleaseWriteLock(Fake<IAdvApi32> advApi32, int serviceControlManagerHandlerValue, int serviceDatabaseLockHandleValue)
 		{
-			advApi32.CallsTo(_ => _.OpenServiceControlManager(A<string>._, A<string>._, A<ScmAccess>._))
-				.Returns(new IntPtr(serviceControlManagerHandlerValue));
-
-			advApi32.CallsTo(_ => _.AquireServiceDatabaseLock(A<IntPtr>._))
-				.Returns(new IntPtr(serviceDatabaseLockHandleValue));
-
 			var sut = new ServiceDatabaseConnection(advApi32.FakedObject);
 
-			sut.Open();
+			var connectionHandle = new ConnectionHandle
+				{
+					ServiceManagerHandle = new IntPtr(serviceControlManagerHandlerValue),
+					ServiceDatabaseLockHandle = new IntPtr(serviceDatabaseLockHandleValue)
+				};
 
-			sut.WriteLock();
-
-			sut.ReleaseLock();
+			sut.ReleaseLock(connectionHandle);
 
 			advApi32.CallsTo(_ => _.ReleaseServiceDatabaseLock(A<IntPtr>._)).MustHaveHappened();
 		}

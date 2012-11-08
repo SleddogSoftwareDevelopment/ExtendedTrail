@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AutoFakeAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceConnectionTests.cs" />
     <Compile Include="ServiceDatabaseConnectionTests.cs" />
     <Compile Include="WindowsServiceInstallerTests.cs" />
   </ItemGroup>

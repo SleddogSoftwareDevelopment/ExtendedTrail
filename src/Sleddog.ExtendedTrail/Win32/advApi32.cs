@@ -15,6 +15,11 @@ namespace Sleddog.ExtendedTrail.Win32
 			return CloseServiceHandle(serviceControlManagerHandle);
 		}
 
+		public bool CloseService(IntPtr serviceHandle)
+		{
+			return CloseServiceHandle(serviceHandle);
+		}
+
 		public IntPtr OpenService(IntPtr serviceControlManagerHandle, string serviceName, ScmAccess serviceControlManagerAccess)
 		{
 			return OpenService(serviceControlManagerHandle, serviceName, (uint) serviceControlManagerAccess);
