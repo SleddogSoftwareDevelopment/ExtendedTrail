@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\MissingServiceManagerConnectionException.cs" />
     <Compile Include="Internals\ServiceConnection.cs" />
     <Compile Include="Internals\ConnectionHandle.cs" />
     <Compile Include="Internals\ServiceDatabaseConnection.cs" />

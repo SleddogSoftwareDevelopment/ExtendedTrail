@@ -26,7 +26,7 @@ namespace Sleddog.ExtendedTrail.Internals
 
 			if (!connectionHandle.ServiceManagerIsOpen)
 			{
-				throw new ServiceConnectionException("Unable to open service connection without an open service manager connection");
+				throw new MissingServiceManagerConnectionException("Unable to open service connection without an open service manager connection");
 			}
 
 			var serviceHandle = advApi32.OpenService(connectionHandle.ServiceManagerHandle, serviceName, ScmAccess.ScManagerAllAccess);
@@ -48,17 +48,18 @@ namespace Sleddog.ExtendedTrail.Internals
 
 			if (!connectionHandle.ServiceManagerIsOpen)
 			{
-				throw new ServiceConnectionException("Unable to close a service connection without an open service manager connection");
+				throw new MissingServiceManagerConnectionException("Unable to close a service connection without an open service manager connection");
 			}
 
 			if (!connectionHandle.ServiceIsOpen)
 			{
-				throw new ServiceConnectionException("Unable to close a service that is not open yet");
+				throw new ArgumentException("Unable to close a service that is not open yet");
 			}
 
-			advApi32.CloseService(connectionHandle.ServiceHandle);
-
-			connectionHandle.ServiceHandle = IntPtr.Zero;
+			if (advApi32.CloseService(connectionHandle.ServiceHandle))
+			{
+				connectionHandle.ServiceHandle = IntPtr.Zero;
+			}
 		}
 	}
 }
