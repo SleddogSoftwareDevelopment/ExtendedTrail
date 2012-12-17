@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A757B8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sleddog.ExtendedTrail.Tests", "Sleddog.ExtendedTrail.Tests\Sleddog.ExtendedTrail.Tests.csproj", "{1D0A5002-6A3E-4F91-8A27-4805D33955F2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{74680C41-27C7-46E1-8A3E-8D5E065451B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1D0A5002-6A3E-4F91-8A27-4805D33955F2} = {74680C41-27C7-46E1-8A3E-8D5E065451B8}
 	EndGlobalSection
 EndGlobal

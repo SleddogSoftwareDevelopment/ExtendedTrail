@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace Sleddog.ExtendedTrail.Win32
@@ -7,7 +8,14 @@ namespace Sleddog.ExtendedTrail.Win32
 	{
 		public IntPtr OpenServiceControlManager(string machineName, string databaseName, ScmAccess serviceControlManagerAccess)
 		{
-			return OpenSCManagerW(machineName, databaseName, (uint) serviceControlManagerAccess);
+			var handle = OpenSCManagerW(machineName, databaseName, (uint) serviceControlManagerAccess);
+
+			if (handle == IntPtr.Zero)
+			{
+				throw new Win32Exception(Marshal.GetLastWin32Error());
+			}
+
+			return handle;
 		}
 
 		public bool CloseServiceControlManager(IntPtr serviceControlManagerHandle)
@@ -22,12 +30,26 @@ namespace Sleddog.ExtendedTrail.Win32
 
 		public IntPtr OpenService(IntPtr serviceControlManagerHandle, string serviceName, ScmAccess serviceControlManagerAccess)
 		{
-			return OpenService(serviceControlManagerHandle, serviceName, (uint) serviceControlManagerAccess);
+			var handle = OpenService(serviceControlManagerHandle, serviceName, (uint) serviceControlManagerAccess);
+
+			if (handle == IntPtr.Zero)
+			{
+				throw new Win32Exception(Marshal.GetLastWin32Error());
+			}
+
+			return handle;
 		}
 
 		public IntPtr AquireServiceDatabaseLock(IntPtr serviceControlManagerHandle)
 		{
-			return LockServiceDatabase(serviceControlManagerHandle);
+			var handle = LockServiceDatabase(serviceControlManagerHandle);
+
+			if (handle == IntPtr.Zero)
+			{
+				throw new Win32Exception(Marshal.GetLastWin32Error());
+			}
+
+			return handle;
 		}
 
 		public bool ReleaseServiceDatabaseLock(IntPtr serviceControlManagerHandler)

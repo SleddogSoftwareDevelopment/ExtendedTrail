@@ -31,11 +31,6 @@ namespace Sleddog.ExtendedTrail.Internals
 
 			var serviceHandle = advApi32.OpenService(connectionHandle.ServiceManagerHandle, serviceName, ScmAccess.ScManagerAllAccess);
 
-			if (serviceHandle == IntPtr.Zero)
-			{
-				throw new ServiceConnectionException("Unable to open service connection");
-			}
-
 			connectionHandle.ServiceHandle = serviceHandle;
 		}
 

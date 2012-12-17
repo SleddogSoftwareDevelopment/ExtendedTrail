@@ -38,20 +38,6 @@ namespace Sleddog.ExtendedTrail.Tests
 		}
 
 		[Theory, AutoFake]
-		public void OpenServiceFailingToOpenConnectionThrowsException(Fake<IAdvApi32> advApi32, int serviceControlManagerHandleValue,
-		                                                              string serviceName)
-		{
-			advApi32.CallsTo(_ => _.OpenService(A<IntPtr>._, A<string>._, A<ScmAccess>._))
-			        .Returns(IntPtr.Zero);
-
-			var sut = new ServiceConnection(advApi32.FakedObject);
-
-			var connectionHandle = new ConnectionHandle {ServiceManagerHandle = new IntPtr(serviceControlManagerHandleValue)};
-
-			Assert.Throws<ServiceConnectionException>(() => sut.Open(connectionHandle, serviceName));
-		}
-
-		[Theory, AutoFake]
 		public void OpenServiceCallsUnderlyingApi(Fake<IAdvApi32> advApi32, int serviceControlManagerHandleValue, int serviceHandleValue,
 		                                          string serviceName)
 		{
@@ -107,7 +93,7 @@ namespace Sleddog.ExtendedTrail.Tests
 
 		[Theory, AutoFake]
 		public void FailedCloseServiceDoesNotResetConnectionHandle(Fake<IAdvApi32> advApi32, int serviceControlManagerHandleValue,
-		                                                               int serviceHandleValue)
+		                                                           int serviceHandleValue)
 		{
 			advApi32.CallsTo(_ => _.CloseService(A<IntPtr>._))
 			        .Returns(false);
@@ -125,7 +111,7 @@ namespace Sleddog.ExtendedTrail.Tests
 			var actual = connectionHandle.ServiceHandle;
 			var expected = new IntPtr(serviceHandleValue);
 
-			Assert.Equal(expected,actual);
+			Assert.Equal(expected, actual);
 		}
 
 		[Theory, AutoFake]

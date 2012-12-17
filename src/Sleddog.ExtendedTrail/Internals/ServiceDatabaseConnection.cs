@@ -16,11 +16,6 @@ namespace Sleddog.ExtendedTrail.Internals
 		{
 			var serviceManagerHandle = advApi32.OpenServiceControlManager(null, null, ScmAccess.ScManagerAllAccess);
 
-			if (serviceManagerHandle.ToInt32() <= 0)
-			{
-				throw new ServiceConnectionException("Unable to open Service Control Manager");
-			}
-
 			return new ConnectionHandle {ServiceManagerHandle = serviceManagerHandle};
 		}
 
@@ -37,11 +32,6 @@ namespace Sleddog.ExtendedTrail.Internals
 			}
 
 			var serviceDatabaseLockHandle = advApi32.AquireServiceDatabaseLock(connectionHandle.ServiceManagerHandle);
-
-			if (serviceDatabaseLockHandle.ToInt32() <= 0)
-			{
-				throw new ServiceConnectionException("Unable to get write lock to the service database");
-			}
 
 			connectionHandle.ServiceDatabaseLockHandle = serviceDatabaseLockHandle;
 		}
