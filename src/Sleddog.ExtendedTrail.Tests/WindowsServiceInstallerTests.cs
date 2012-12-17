@@ -6,7 +6,7 @@ namespace Sleddog.ExtendedTrail.Tests
 	public class WindowsServiceInstallerTests
 	{
 		[Fact]
-		public void FirstFailureOptionAreNotNullOnInitialize()
+		public void FirstFailureOptionIsNotNullOnInitialize()
 		{
 			var sut = new WindowsServiceInstaller();
 
@@ -22,7 +22,7 @@ namespace Sleddog.ExtendedTrail.Tests
 		}
 
 		[Fact]
-		public void SecondFailureOptionAreNotNullOnInitialize()
+		public void SecondFailureOptionIsNotNullOnInitialize()
 		{
 			var sut = new WindowsServiceInstaller();
 
@@ -38,7 +38,7 @@ namespace Sleddog.ExtendedTrail.Tests
 		}
 
 		[Fact]
-		public void SubsequentFailureOptionAreNotNullOnInitialize()
+		public void SubsequentFailureOptionIsNotNullOnInitialize()
 		{
 			var sut = new WindowsServiceInstaller();
 
