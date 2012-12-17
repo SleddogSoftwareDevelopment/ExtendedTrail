@@ -81,8 +81,11 @@
     <Compile Include="Internals\ServiceDatabaseConnection.cs" />
     <Compile Include="Internals\ServiceConnectionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecoverAction.cs" />
-    <Compile Include="RecoveryOption.cs" />
+    <Compile Include="RecoveryOptions\NOOPOption.cs" />
+    <Compile Include="RecoveryOptions\RecoveryOption.cs" />
+    <Compile Include="RecoveryOptions\RestartComputerOption.cs" />
+    <Compile Include="RecoveryOptions\RestartServiceOption.cs" />
+    <Compile Include="RecoveryOptions\RunCommandOption.cs" />
     <Compile Include="Win32\AccessMask.cs" />
     <Compile Include="Win32\AdvApi32.cs" />
     <Compile Include="Win32\IAdvApi32.cs" />

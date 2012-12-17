@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.ServiceProcess;
+using Sleddog.ExtendedTrail.RecoveryOptions;
 
 namespace Sleddog.ExtendedTrail
 {
@@ -10,7 +11,7 @@ namespace Sleddog.ExtendedTrail
 
 		public WindowsServiceInstaller()
 		{
-			recoveryOptions = Enumerable.Range(0, 3).Select(_ => new RecoveryOption()).ToArray();
+			recoveryOptions = Enumerable.Range(0, 3).Select(_ => new NOOPOption()).ToArray();
 		}
 
 		public bool StartOnInstall { get; set; }
@@ -61,12 +62,12 @@ namespace Sleddog.ExtendedTrail
 
 		private bool RequiresShutdownPrivileges()
 		{
-			return recoveryOptions.Any(ro => ro.Action == RecoverAction.Reboot);
+			return recoveryOptions.Any(ro => ro.GetType() == typeof (RestartComputerOption));
 		}
 
 		private bool AnyRecoveryOptions()
 		{
-			return recoveryOptions.Any(ro => ro.Action != RecoverAction.None);
+			return recoveryOptions.Any(ro => ro.GetType() != typeof (NOOPOption));
 		}
 	}
 }
