@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Linq;
-using System.ServiceProcess;
 using Sleddog.ExtendedTrail.RecoveryOptions;
 
 namespace Sleddog.ExtendedTrail
 {
-	public class WindowsServiceInstaller : ServiceInstaller
+	public class InstallConfiguration
 	{
 		private readonly RecoveryOption[] recoveryOptions;
 
-		public WindowsServiceInstaller()
+		public InstallConfiguration()
 		{
 			recoveryOptions = Enumerable.Range(0, 3).Select(_ => new NOOPOption()).ToArray();
+		
 		}
-
 		public bool StartOnInstall { get; set; }
+
+		public StartupType StartupType { get; set; }
 
 		public TimeSpan FailCountResetTime { get; set; }
 
@@ -58,16 +59,6 @@ namespace Sleddog.ExtendedTrail
 
 				recoveryOptions[2] = value;
 			}
-		}
-
-		private bool RequiresShutdownPrivileges()
-		{
-			return recoveryOptions.Any(ro => ro.GetType() == typeof (RestartComputerOption));
-		}
-
-		private bool AnyRecoveryOptions()
-		{
-			return recoveryOptions.Any(ro => ro.GetType() != typeof (NOOPOption));
 		}
 	}
 }
