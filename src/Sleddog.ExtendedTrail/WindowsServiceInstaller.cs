@@ -13,6 +13,8 @@ namespace Sleddog.ExtendedTrail
 			recoveryOptions = Enumerable.Range(0, 3).Select(_ => new RecoveryOption()).ToArray();
 		}
 
+		public bool StartOnInstall { get; set; }
+
 		public TimeSpan FailCountResetTime { get; set; }
 
 		public RecoveryOption FirstFailure
