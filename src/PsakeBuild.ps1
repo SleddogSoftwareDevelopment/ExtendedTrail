@@ -11,7 +11,7 @@ properties {
 
 Framework '4.0'
 
-Task default -Depends Compile
+Task default -Depends Test
 
 Task Test -Depends Compile {
 	$testAssemblies = Get-ChildItem -Recurse -Filter *Tests.dll $BuildDir
