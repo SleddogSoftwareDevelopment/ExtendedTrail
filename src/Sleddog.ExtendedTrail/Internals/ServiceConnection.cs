@@ -24,7 +24,7 @@ namespace Sleddog.ExtendedTrail.Internals
 				throw new ArgumentNullException("serviceName");
 			}
 
-			if (!connectionHandle.ServiceManagerIsOpen)
+			if (!connectionHandle.IsServiceManagerOpen)
 			{
 				throw new MissingServiceManagerConnectionException("Unable to open service connection without an open service manager connection");
 			}
@@ -41,12 +41,12 @@ namespace Sleddog.ExtendedTrail.Internals
 				throw new ArgumentNullException("connectionHandle");
 			}
 
-			if (!connectionHandle.ServiceManagerIsOpen)
+			if (!connectionHandle.IsServiceManagerOpen)
 			{
 				throw new MissingServiceManagerConnectionException("Unable to close a service connection without an open service manager connection");
 			}
 
-			if (!connectionHandle.ServiceIsOpen)
+			if (!connectionHandle.IsServiceOpen)
 			{
 				throw new ArgumentException("Unable to close a service that is not open yet");
 			}

@@ -26,7 +26,7 @@ namespace Sleddog.ExtendedTrail.Internals
 				throw new ArgumentNullException("connectionHandle");
 			}
 
-			if (!connectionHandle.ServiceManagerIsOpen)
+			if (!connectionHandle.IsServiceManagerOpen)
 			{
 				throw new ServiceConnectionException("Unable to lock service database without an open connection to the service manager");
 			}
@@ -43,12 +43,12 @@ namespace Sleddog.ExtendedTrail.Internals
 				throw new ArgumentNullException("connectionHandle");
 			}
 
-			if (!connectionHandle.ServiceManagerIsOpen)
+			if (!connectionHandle.IsServiceManagerOpen)
 			{
 				throw new ServiceConnectionException("Unable to unlock service database without an open connection to the service manager");
 			}
 
-			if (!connectionHandle.ServiceDatabaseIsLocked)
+			if (!connectionHandle.IsServiceDatabaseLocked)
 			{
 				throw new ServiceConnectionException("Unable to unlock service database when it is not locked");
 			}
@@ -66,7 +66,7 @@ namespace Sleddog.ExtendedTrail.Internals
 				throw new ArgumentNullException("connectionHandle");
 			}
 
-			if (!connectionHandle.ServiceManagerIsOpen)
+			if (!connectionHandle.IsServiceManagerOpen)
 			{
 				throw new ServiceConnectionException("Unable to close service manager connection when it is not open");
 			}

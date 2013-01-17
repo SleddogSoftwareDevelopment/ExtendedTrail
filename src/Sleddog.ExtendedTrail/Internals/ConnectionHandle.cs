@@ -8,17 +8,17 @@ namespace Sleddog.ExtendedTrail.Internals
 		public IntPtr ServiceManagerHandle { get; set; }
 		public IntPtr ServiceHandle { get; set; }
 
-		public bool ServiceManagerIsOpen
+		public bool IsServiceManagerOpen
 		{
 			get { return ServiceManagerHandle != IntPtr.Zero; }
 		}
 
-		public bool ServiceDatabaseIsLocked
+		public bool IsServiceDatabaseLocked
 		{
 			get { return ServiceDatabaseLockHandle != IntPtr.Zero; }
 		}
 
-		public bool ServiceIsOpen
+		public bool IsServiceOpen
 		{
 			get { return ServiceHandle != IntPtr.Zero; }
 		}
