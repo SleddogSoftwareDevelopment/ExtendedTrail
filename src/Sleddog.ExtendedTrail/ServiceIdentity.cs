@@ -11,6 +11,16 @@ namespace Sleddog.ExtendedTrail
 
 		public ServiceIdentity(string username, string password)
 		{
+			if (username == null)
+			{
+				throw new ArgumentNullException("username");
+			}
+
+			if (password == null)
+			{
+				throw new ArgumentNullException("password");
+			}
+
 			UserName = username;
 			StorePassword(password);
 

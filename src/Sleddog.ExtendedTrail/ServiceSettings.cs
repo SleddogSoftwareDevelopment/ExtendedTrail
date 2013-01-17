@@ -1,4 +1,6 @@
-﻿namespace Sleddog.ExtendedTrail
+﻿using System;
+
+namespace Sleddog.ExtendedTrail
 {
 	public class ServiceSettings
 	{
@@ -8,6 +10,21 @@
 
 		public ServiceSettings(string serviceName, string displayName, string description)
 		{
+			if (serviceName == null)
+			{
+				throw new ArgumentNullException("serviceName");
+			}
+
+			if (displayName == null)
+			{
+				throw new ArgumentNullException("displayName");
+			}
+
+			if (description == null)
+			{
+				throw new ArgumentNullException("description");
+			}
+
 			DisplayName = displayName;
 			ServiceName = serviceName;
 			Description = description;

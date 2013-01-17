@@ -14,6 +14,14 @@ namespace Sleddog.ExtendedTrail.Tests
 			Assert.Throws<ArgumentOutOfRangeException>(() => new ServiceIdentity(ServiceAccount.User));
 		}
 
+		[Theory]
+		[InlineData(null, "randomValue")]
+		[InlineData("randomValue", null)]
+		public void ConstructorDoesNotAcceptNull(string username, string password)
+		{
+			Assert.Throws<ArgumentNullException>(() => new ServiceIdentity(username, password));
+		}
+
 		[Theory, InlineAutoData]
 		public void ServiceAccountUsersIsSetBySupplyingLoginAndPass(string username, string password)
 		{
