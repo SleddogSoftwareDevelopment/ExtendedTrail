@@ -9,6 +9,24 @@ namespace Sleddog.ExtendedTrail
 	{
 		private SecureString securePassword;
 
+		public ServiceIdentity(string username, string password)
+		{
+			UserName = username;
+			StorePassword(password);
+
+			ServiceAccount = ServiceAccount.User;
+		}
+
+		public ServiceIdentity(ServiceAccount serviceAccount)
+		{
+			if (serviceAccount == ServiceAccount.User)
+			{
+				throw new ArgumentOutOfRangeException("serviceAccount", "ServiceAccount can't be user without supplying username and password");
+			}
+
+			ServiceAccount = serviceAccount;
+		}
+
 		public ServiceAccount ServiceAccount { get; set; }
 
 		public string UserName { get; set; }
